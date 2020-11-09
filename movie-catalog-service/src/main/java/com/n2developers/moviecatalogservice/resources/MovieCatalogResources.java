@@ -3,6 +3,7 @@ package com.n2developers.moviecatalogservice.resources;
 import com.n2developers.moviecatalogservice.models.CatalogItem;
 import com.n2developers.moviecatalogservice.models.Movie;
 import com.n2developers.moviecatalogservice.models.Rating;
+import com.n2developers.moviecatalogservice.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
@@ -31,20 +32,17 @@ public class MovieCatalogResources {
 
 
         //get all rated movie IDs
-        List<Rating> rating= Arrays.asList(
-            new Rating("0001",3),
-            new Rating("0002",4)
-        );
+        UserRating rating=restTemplate.getForObject("http://localhost:8083/ratingsdata/users/"+userId, UserRating.class);
 
-        return  rating.stream().map(rating1 -> {
-            //Movie movie= restTemplate.getForObject("http://localhost:8082/movies/"+rating1.getMovieId(), Movie.class);
+        return  rating.getUserRating().stream().map(rating1 -> {
+            Movie movie= restTemplate.getForObject("http://localhost:8082/movies/"+rating1.getMovieId(), Movie.class);
 
-            Movie movie=webClientBuilder.build()
-                    .get()
-                    .uri("http://localhost:8082/movies/"+rating1.getMovieId())
-                    .retrieve()
-                    .bodyToMono(Movie.class)
-                    .block();
+//            Movie movie=webClientBuilder.build()
+//                    .get()
+//                    .uri("http://localhost:8082/movies/"+rating1.getMovieId())
+//                    .retrieve()
+//                    .bodyToMono(Movie.class)
+//                    .block();
 
 
             return new CatalogItem(movie.getName(),"test desc",rating1.getRating());
