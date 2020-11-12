@@ -7,6 +7,7 @@ import com.n2developers.moviecatalogservice.models.UserRating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,8 @@ public class MovieCatalogResources {
     private RestTemplate restTemplate;
     @Autowired
     private WebClient.Builder webClientBuilder;
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @RequestMapping("/{userId}")
     public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
