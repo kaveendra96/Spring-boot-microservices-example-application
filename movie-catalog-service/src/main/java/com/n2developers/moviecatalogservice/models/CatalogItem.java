@@ -10,7 +10,9 @@ public class CatalogItem {
         this.desc = desc;
         this.rating = rating;
     }
-    CatalogItem(){}
+
+    CatalogItem() {
+    }
 
     public String getName() {
         return name;
@@ -34,5 +36,14 @@ public class CatalogItem {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "CatalogItem{" +
+                "name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", rating=" + rating +
+                '}';
     }
 }
